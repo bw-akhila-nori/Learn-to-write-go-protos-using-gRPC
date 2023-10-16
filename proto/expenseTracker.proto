@@ -1,0 +1,38 @@
+
+syntax="proto3"; //when we have a grpc service, the messages that we will
+//exchange between client and server ... we are going to use version 3 
+//of protocol buffers 
+// import "time";
+ 
+package proto;
+ 
+option go_package="example.com/go-grpc-crud/gen/go/expenseTracker";
+ 
+message ExpenseTracker {
+  repeated string title=1;
+   repeated int64 amount=2;
+   repeated string date=3;
+}
+ 
+message CreateRequest {
+  repeated ExpenseTracker expenseTracker=1;
+}
+
+message CreateResponse {
+   repeated string title=1; //will be at position 1 of message
+   repeated int64 amount=2;
+   repeated string date=3;
+   
+}
+message ReadTrackerRequest{
+}
+message ReadTrackerResponse{
+   repeated ExpenseTracker expenseTracker = 1;
+}
+
+service TrackerService {
+   //defining my endpoints/rps methods
+   rpc Create(CreateRequest) returns (CreateResponse) {}
+   rpc GetTracker(ReadTrackerRequest) returns (ReadTrackerResponse) {}
+   
+}
